@@ -1,5 +1,4 @@
 
-
 import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
 public final static int NUM_ROWS = 20;
@@ -105,38 +104,42 @@ public class MSButton
     
     public void mousePressed () 
     {
-        clicked = true;
+        if (mouseButton == LEFT)
+        {
+            if (!clicked)
+                clicked = true;
+            if (keyPressed)
+                marked = !marked;
+            else if (bombs.contains(this))
+                displayLosingMessage();
+            else if (countBombs(r, c) > 0)
+                setLabel(str(countBombs(r, c)));
+            else
+            {
+                if (isValid(r, c+1) && !buttons[r][c+1].isClicked())
+                    buttons[r][c+1].mousePressed();
+                if (isValid(r, c-1) && !buttons[r][c-1].isClicked())
+                    buttons[r][c-1].mousePressed();
+                if (isValid(r-1, c) && !buttons[r-1][c].isClicked())
+                    buttons[r-1][c].mousePressed();            
+                if (isValid(r+1, c) && !buttons[r+1][c].isClicked())
+                    buttons[r+1][c].mousePressed();
+                if (isValid(r-1, c-1) && !buttons[r-1][c-1].isClicked())
+                    buttons[r-1][c-1].mousePressed();
+                if (isValid(r-1, c+1) && !buttons[r-1][c+1].isClicked())
+                    buttons[r-1][c+1].mousePressed();
+                if (isValid(r+1, c+1) && !buttons[r+1][c+1].isClicked())
+                    buttons[r+1][c+1].mousePressed();
+                if (isValid(r+1, c-1) && !buttons[r+1][c-1].isClicked())
+                    buttons[r+1][c-1].mousePressed();
+            }
+        }  
         if (mouseButton == RIGHT)
         {
-            marked =!marked;
-            if (!marked)
-                clicked = false;
-        }   
-        else if (bombs.contains(this))
-            displayLosingMessage();
-        else if (countBombs(r, c) > 0)
-            setLabel(str(countBombs(r, c)));
-        else
-        {
-            if (isValid(r, c+1) && !buttons[r][c+1].isClicked())
-                buttons[r][c+1].mousePressed();
-            if (isValid(r, c-1) && !buttons[r][c-1].isClicked())
-                buttons[r][c-1].mousePressed();
-            if (isValid(r-1, c) && !buttons[r-1][c].isClicked())
-                buttons[r-1][c].mousePressed();            
-            if (isValid(r+1, c) && !buttons[r+1][c].isClicked())
-                buttons[r+1][c].mousePressed();
-            if (isValid(r-1, c-1) && !buttons[r-1][c-1].isClicked())
-                buttons[r-1][c-1].mousePressed();
-            if (isValid(r-1, c+1) && !buttons[r-1][c+1].isClicked())
-                buttons[r-1][c+1].mousePressed();
-            if (isValid(r+1, c+1) && !buttons[r+1][c+1].isClicked())
-                buttons[r+1][c+1].mousePressed();
-            if (isValid(r+1, c-1) && !buttons[r+1][c-1].isClicked())
-                buttons[r+1][c-1].mousePressed();
+            if (clicked == false)
+                marked = !marked;
         }
         //your code here
-
     }
 
     public void draw () 
